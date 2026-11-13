@@ -93,7 +93,7 @@ window.__TMN_SAMPLE = {
     rClose: "Close",
     loveLine: "Awaiting your gracious presence",
     family:
-      "Mrs. Premlata & Mr. Anil Agrawal\nWith Affection: Deepika & Our Little Ones (Aashi & Saanvi)\nVineet Narayan\nPrasad Agarwal",
+      "Mrs. Premlata & Mr. Anil Agrawal\nWith Affection\n Deepika & Our Little Ones (Aashi & Saanvi)\nVineet\nPrasad Agarwal",
     callLine: "For any help, please call",
     p1n: "Mr. Anil Agrawal",
     p1: "7546043157",
