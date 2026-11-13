@@ -303,10 +303,10 @@
   /* the invitation rises line by line as the Ganesh ji scene fades away; lower lines wait for the scroll */
   function showFirst() {
     var k = 0;
-    first.forEach(function (e) { if (e.getBoundingClientRect().top < innerHeight) { e.style.transitionDelay = (k++ * .16).toFixed(2) + 's'; e.classList.add('in'); } else io.observe(e); });
+    first.forEach(function (e) { if (e.getBoundingClientRect().top < innerHeight) { e.style.transitionDelay = (k++ * .10).toFixed(2) + 's'; e.classList.add('in'); } else io.observe(e); });
   }
   var en = document.getElementById('wiEnter');
-  if (document.getElementById('weddingIntro') && en) en.addEventListener('click', function () { setTimeout(showFirst, 500); });
+  if (document.getElementById('weddingIntro') && en) en.addEventListener('click', function () { setTimeout(showFirst, 100); });
   else showFirst();
   rv.forEach(function (e) { if (first.indexOf(e) < 0) io.observe(e); });
 })();

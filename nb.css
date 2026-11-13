@@ -230,5 +230,5 @@ body::after{display:none!important}
 }
 
 /* gentle reveal while scrolling */
-#nb .rv{opacity:0;transform:translateY(22px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+#nb .rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1);will-change:transform,opacity}
 #nb .rv.in{opacity:1;transform:none}

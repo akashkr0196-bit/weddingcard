@@ -203,23 +203,23 @@ body::after{content:"";position:fixed;inset:0;z-index:3;pointer-events:none;mix-
  background:radial-gradient(circle,#fff6dc,rgba(255,214,150,.9) 45%,transparent 72%);opacity:0;animation:wiSpk var(--t) ease-out infinite var(--d)}
 .wi-playing .wi-bloom{animation:wiBloomIn 6.2s cubic-bezier(.4,0,.2,1) forwards}
 .wi-playing .wi-spk{opacity:1;transition:opacity 1s 1.6s}
-.wi-opened .wi-bloom{animation:wiBloomOut 3s ease-out forwards}
-.wi-opened .wi-spk{opacity:0;transition:opacity 2.2s}
-.wi.wi-leaving{opacity:0;transform:scale(1.07);filter:blur(10px) brightness(1.18);transition:opacity 2s cubic-bezier(.4,0,.2,1),transform 2.2s ease,filter 2s ease}
+.wi-opened .wi-bloom{animation:wiBloomOut 2s ease-out forwards}
+.wi-opened .wi-spk{opacity:0;transition:opacity 1.5s}
+.wi.wi-leaving{opacity:0!important;transform:none!important;filter:none!important;pointer-events:none!important;transition:opacity .6s cubic-bezier(.25,1,.5,1)!important;will-change:opacity}
 @keyframes nud{50%{transform:translateY(6px)}}
 @keyframes wiL{0%{visibility:visible;transform:none}99%{visibility:visible}100%{visibility:hidden;transform:rotateY(105deg)}}
 @keyframes wiR{0%{visibility:visible;transform:none}99%{visibility:visible}100%{visibility:hidden;transform:rotateY(-105deg)}}
 @keyframes wiT{0%{visibility:visible;transform:none}99%{visibility:visible}100%{visibility:hidden;transform:rotateX(-105deg)}}
 @keyframes wiB{0%{visibility:visible;transform:none}99%{visibility:visible}100%{visibility:hidden;transform:rotateX(105deg)}}
 @keyframes wiLit{0%,44%{opacity:0}46%,100%{opacity:1}}
-@keyframes wiRv{from{opacity:0;transform:translateY(2.5cqw);filter:blur(1.2cqw)}to{opacity:1;transform:none;filter:none}}
+@keyframes wiRv{from{opacity:0;transform:translateY(2cqw)}to{opacity:1;transform:none}}
 @keyframes wiPulse{0%,100%{opacity:.5}50%{opacity:1}}
 @keyframes wiRing{0%{box-shadow:0 2cqw 4cqw rgba(109,20,36,.5),0 0 0 0 rgba(201,160,106,.6)}70%,100%{box-shadow:0 2cqw 4cqw rgba(109,20,36,.5),0 0 0 6cqw rgba(201,160,106,0)}}
 @keyframes wdL{0%{visibility:visible;transform:none}99%{visibility:visible}100%{visibility:hidden;transform:rotateY(104deg)}}
 @keyframes wdR{0%{visibility:visible;transform:none}99%{visibility:visible}100%{visibility:hidden;transform:rotateY(-104deg)}}
 @keyframes wdS{0%{opacity:0}100%{opacity:.7}}
 @keyframes wdG{0%{opacity:0;scale:.5}30%{opacity:1;scale:1.05}100%{opacity:0;scale:2.2}}
-@keyframes wdP{0%{scale:1.2;filter:blur(3px) brightness(1.25)}100%{scale:1;filter:none}}
+@keyframes wdP{0%{scale:1.15;filter:none}100%{scale:1;filter:none}}
 @keyframes wiSh{0%{translate:-130% 0}55%,100%{translate:310% 0}}
 @keyframes wiFl{0%,100%{opacity:.5;scale:.9}30%{opacity:1;scale:1.1}60%{opacity:.7;scale:.95}}
 @keyframes wiMo{0%{translate:0 0;opacity:0}15%{opacity:.95}100%{translate:var(--dx) -110cqw;opacity:0}}
@@ -230,9 +230,8 @@ body::after{content:"";position:fixed;inset:0;z-index:3;pointer-events:none;mix-
 @keyframes wiBloomOut{0%{opacity:.92;scale:1.05}100%{opacity:0;scale:1.5}}
 @keyframes wiRay{to{rotate:360deg}}
 @keyframes wiSpk{0%{opacity:0;transform:translateY(0) scale(.4)}20%{opacity:1}100%{opacity:0;transform:translateY(-38cqw) scale(1.1)}}
-.wi.wi-leaving{transition:opacity 1.6s ease!important}
 </style>
-<link href="nb.css?v=2" rel="stylesheet">
+<link href="nb.css?v=3" rel="stylesheet">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -499,9 +498,16 @@ window.__bgmState=function(){return{wa:usingWA,paused:au.paused,t:au.currentTime
   if(hv&&reduce){hv.removeAttribute('autoplay');hv.pause()}
   document.body.style.overflow='hidden';
   let opened=false,entered=false;
-  function ready(){intro.classList.add('wi-ready');setTimeout(function(){enter.click()},3500)}
+  function ready(){
+    intro.classList.add('wi-ready');
+    setTimeout(function(){ if(!entered) enter.click(); }, 1800);
+  }
   const ev=document.getElementById('envVid');
-  if(ev){ev.src='assets/env.mp4?v=2';ev.load()}
+  if(ev){
+    ev.src='assets/env.mp4?v=2';
+    ev.playbackRate=1.12;
+    ev.load();
+  }
   let started=false;
   function openInvitation(){
     if(started)return;started=true;
@@ -511,12 +517,22 @@ window.__bgmState=function(){return{wa:usingWA,paused:au.paused,t:au.currentTime
     navigator.vibrate&&navigator.vibrate(20);
     intro.classList.add('wi-playing');
     if(!ev||!ev.isConnected||reduce){revealCard();return}
-    let go=false;const rv=function(){if(go)return;go=true;ev.classList.add('done');revealCard()};
+    let go=false;
+    const rv=function(){
+      if(go)return;go=true;
+      ev.classList.add('done');
+      revealCard();
+    };
     ev.addEventListener('ended',rv);
-    ev.addEventListener('timeupdate',function(){if(ev.currentTime>=6.2)rv()});
+    ev.addEventListener('timeupdate',function(){if(ev.currentTime>=3.8)rv()});
     ev.addEventListener('error',rv);
-    setTimeout(rv,9000);
-    try{ev.currentTime=0;const pr=ev.play();pr&&pr.catch(rv)}catch(e){rv()}
+    setTimeout(rv,4600);
+    try{
+      ev.playbackRate=1.12;
+      ev.currentTime=0;
+      const pr=ev.play();
+      pr&&pr.catch(rv);
+    }catch(e){rv()}
   }
   function revealCard(){
     if(opened)return;opened=true;
@@ -524,21 +540,25 @@ window.__bgmState=function(){return{wa:usingWA,paused:au.paused,t:au.currentTime
     paper.removeAttribute('aria-hidden');
     navigator.vibrate&&navigator.vibrate(20);
     intro.classList.add('wi-opened');
+    // Tap anywhere to skip immediately to main invitation
+    intro.style.cursor='pointer';
+    intro.addEventListener('click',function(){ if(opened&&!entered) enter.click(); });
     if(reduce){ready();return}
     last.addEventListener('animationend',function f(e){if(e.animationName==='wiRv'){last.removeEventListener('animationend',f);ready()}});
-    setTimeout(ready,6500); /* safety net */
+    setTimeout(ready,2200);
   }
   seal.addEventListener('click',openInvitation);
   seal.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openInvitation()}});
   function finish(){if(intro.parentNode)intro.remove()}
-  enter.addEventListener('click',function(){
+  enter.addEventListener('click',function(e){
+    if(e) e.stopPropagation();
     if(entered||!opened)return;entered=true;
     window.scrollTo(0,0);document.body.style.overflow='';
     if(hv&&!reduce){try{hv.currentTime=0;const pr=hv.play();pr&&pr.catch(function(){})}catch(e){}}
     intro.classList.add('wi-leaving');
-    setTimeout(function(){const hb=document.querySelector('.hb');hb&&hb.classList.add('go')},900);
-    intro.addEventListener('transitionend',function(e){if(e.target===intro&&e.propertyName==='opacity')finish()});
-    setTimeout(finish,2600);
+    setTimeout(function(){const hb=document.querySelector('.hb');hb&&hb.classList.add('go')},200);
+    intro.addEventListener('transitionend',function(ev){if(ev.target===intro&&ev.propertyName==='opacity')finish()});
+    setTimeout(finish,750);
   });
 })();
 </script>
@@ -614,24 +634,37 @@ function gyro(){try{var D=window.DeviceOrientationEvent;if(D&&typeof D.requestPe
 var D0=window.DeviceOrientationEvent;if(!(D0&&typeof D0.requestPermission==='function'))gyro();
 var seal=document.getElementById('waxSeal');if(seal)seal.addEventListener('click',gyro);
 var hb=document.querySelector('.hb'),bg=hb&&hb.querySelector('.bg'),cp=hb&&hb.querySelector('.cpl img'),ht=hb&&hb.querySelector('.ht'),gn=hb&&hb.querySelector('.gnsh');
-var items=[].slice.call(document.querySelectorAll('.pc,#evs .card,.vph,.scw')).map(function(el){return {el:el,rx:0,ry:0,v:false}});
-if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){items.forEach(function(it){if(it.el===e.target)it.v=e.isIntersecting})})},{rootMargin:'120px'});items.forEach(function(it){io.observe(it.el)})}else items.forEach(function(it){it.v=true});
+var items=[].slice.call(document.querySelectorAll('.pc,#evs .card,.vph,.scw')).map(function(el){return {el:el,rx:0,ry:0,v:false,cy:innerHeight/2}});
+var vh=innerHeight;
+function measureItems(){
+  vh=innerHeight;
+  for(var i=0;i<items.length;i++){
+    if(items[i].v){
+      var r=items[i].el.getBoundingClientRect();
+      items[i].cy=r.top+r.height/2;
+    }
+  }
+}
+addEventListener('scroll',measureItems,{passive:true});
+addEventListener('resize',measureItems,{passive:true});
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){items.forEach(function(it){if(it.el===e.target){it.v=e.isIntersecting;if(it.v){var r=it.el.getBoundingClientRect();it.cy=r.top+r.height/2;}}})})},{rootMargin:'80px'});items.forEach(function(it){io.observe(it.el)})}else items.forEach(function(it){it.v=true});
 var run=true;
 function frame(now){
  if(!run)return;requestAnimationFrame(frame);
  var t=now/1000;cx+=(tx-cx)*.07;cy+=(ty-cy)*.07;
  var ux=cx+Math.sin(t*.55)*.2,uy=cy+Math.cos(t*.45)*.15;window.__tiltX=ux;
- var sy=window.scrollY||0;
  if(seal&&seal.isConnected){
   var m=Math.min(1,Math.hypot(ux,uy)),ang=m*20;
   seal.style.rotate=m<.01?'1 0 0 0deg':(-uy).toFixed(3)+' '+ux.toFixed(3)+' 0 '+ang.toFixed(2)+'deg';
   seal.style.setProperty('--hx',(32+ux*-22).toFixed(1)+'%');seal.style.setProperty('--hy',(26+uy*-22).toFixed(1)+'%')}
- var vh=innerHeight;
  for(var i=0;i<items.length;i++){var it=items[i];if(!it.v)continue;
-  var r=it.el.getBoundingClientRect(),c=clamp((r.top+r.height/2-vh/2)/(vh*.6));
+  var c=clamp((it.cy-vh/2)/(vh*.6));
   var trx=c*7,try_=ux*2.2*(1-Math.abs(c)*.5);
-  it.rx+=(trx-it.rx)*.12;it.ry+=(try_-it.ry)*.12;
-  it.el.style.transform='perspective(1100px) rotateX('+it.rx.toFixed(2)+'deg) rotateY('+it.ry.toFixed(2)+'deg) translateZ(0)'}
+  if(Math.abs(trx-it.rx)>.04||Math.abs(try_-it.ry)>.04){
+    it.rx+=(trx-it.rx)*.12;it.ry+=(try_-it.ry)*.12;
+    it.el.style.transform='perspective(1100px) rotateX('+it.rx.toFixed(2)+'deg) rotateY('+it.ry.toFixed(2)+'deg) translateZ(0)';
+  }
+ }
 }
 requestAnimationFrame(frame);
 document.addEventListener('visibilitychange',function(){if(document.hidden)run=false;else if(!run){run=true;requestAnimationFrame(frame)}});
@@ -644,7 +677,7 @@ var inF=window.parent!==window,seen=false;try{seen=inF&&sessionStorage.getItem('
 if(!ok||seen){var i=document.getElementById('weddingIntro');if(i)i.remove();document.body.style.overflow=''}
 var t=setInterval(function(){if(!document.getElementById('weddingIntro')){clearInterval(t);window.__calm=true}},500)})();
 </script>
-<script src="nb.js?v=2"></script>
+<script src="nb.js?v=3"></script>
 
 </body>
 </html>
