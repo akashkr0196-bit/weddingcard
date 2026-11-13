@@ -30,7 +30,7 @@ window.__TMN_SAMPLE = {
       map: "https://maps.app.goo.gl/X32eRNjDYJp5mr6T6",
     },
     {
-      name: "Sangeet",
+      name: "Sangeet & Mehendi",
       date: "Thursday, 3 December 2026",
       time: "04:00 PM onwards",
       venue: "In The Premises of M/s Agrawal Traders.",
