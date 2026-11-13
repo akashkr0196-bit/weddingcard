@@ -292,7 +292,8 @@
     var parts = line.split('·').map(function (x) { return x.trim(); }).filter(Boolean);
     parts.forEach(function (p, i) {
       if (i) { fl.appendChild(document.createTextNode(' ')); fl.appendChild(el('i', 'sep', '·')); fl.appendChild(document.createTextNode(' ')); }
-      fl.appendChild(el('b', '', p));
+      var isHighlight = /with affection/i.test(p) || /^\s*vineet/i.test(p);
+      fl.appendChild(el('b', isHighlight ? 'gold-txt' : '', p));
     });
   });
   if (!has(T.family)) { fl.hidden = true; $('[data-t=loveLine]').hidden = true; }

@@ -177,6 +177,7 @@ body::after{display:none!important}
 @keyframes nbSwing{0%,100%{rotate:-1.6deg}50%{rotate:1.6deg}}
 #nb .famlist{font-size:1.16rem;line-height:1.75;color:var(--ink);max-width:24em;margin:0 auto}
 #nb .famlist b{font-weight:500;white-space:nowrap}
+#nb .famlist b.gold-txt{color:var(--gd);font-weight:600}
 #nb .famlist .sep{display:inline-block;width:1.1em;color:var(--gold);font-style:normal}
 #nb .rule{display:block;width:90px;height:1px;margin:28px auto;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 #nb .tels{display:flex;flex-direction:column;align-items:center;gap:10px}
