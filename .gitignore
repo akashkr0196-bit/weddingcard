@@ -1,0 +1,13 @@
+# OS generated files
+Thumbs.db
+ehthumbs.db
+.DS_Store
+
+# Python cache & logs
+__pycache__/
+*.py[cod]
+*.log
+
+# Editor directories
+.vscode/
+.idea/
