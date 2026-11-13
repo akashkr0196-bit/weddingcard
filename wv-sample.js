@@ -3,7 +3,7 @@ window.__TMN_SAMPLE = {
   bride: "Anjali",
   order: "groom",
   iso: "2027-12-12T19:00:00+05:30",
-  song: "./assets/bgm.mp3",
+  song: "./assets/bgm.mp3?v=2",
   photo: "./assets/photo-1.webp?v=2",
   phStyle: "collage",
   gallery: [
