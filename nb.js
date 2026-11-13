@@ -251,7 +251,35 @@
   $('#rSend').addEventListener('click', function () {
     var nm = $('#rName').value.trim(); if (!nm) { $('#rName').focus(); return; }
     var yes = $('input[name=rAtt]:checked').value === 'Yes';
-    if (window.__WV_RSVP) fetch(window.__WV_RSVP, { method: 'POST', body: JSON.stringify({ fullName: nm, attendingStatus: yes ? 'Yes' : 'No', numberOfGuests: yes ? cnt : 0, message: $('#rMsg').value.trim() }) }).catch(function () {});
+    var guestCount = yes ? (parseInt($('#rCount').textContent, 10) || cnt || 1) : 0;
+    var msg = $('#rMsg').value.trim();
+
+    var phone = (T && T.rsvpPhone) ? String(T.rsvpPhone).replace(/[^0-9]/g, '') : '918292614253';
+    if (phone.length === 10) phone = '91' + phone;
+
+    var waLines = [
+      '🌸 *Wedding RSVP - Deepak & Anjali* 🌸',
+      '',
+      '👤 *Name:* ' + nm,
+      '✨ *Attendance:* ' + (yes ? 'Joyfully attending' : 'Regretfully cannot attend (Sending warm blessings)')
+    ];
+    if (yes) {
+      waLines.push('👥 *Number of Guests:* ' + guestCount);
+    }
+    if (msg) {
+      waLines.push('💌 *Blessing / Message:* ' + msg);
+    }
+
+    var waText = waLines.join('\n');
+    var waUrl = 'https://api.whatsapp.com/send?phone=' + phone + '&text=' + encodeURIComponent(waText);
+
+    try {
+      window.open(waUrl, '_blank');
+    } catch (e) {
+      location.href = waUrl;
+    }
+
+    if (window.__WV_RSVP) fetch(window.__WV_RSVP, { method: 'POST', body: JSON.stringify({ fullName: nm, attendingStatus: yes ? 'Yes' : 'No', numberOfGuests: guestCount, message: msg }) }).catch(function () {});
     $('#rsvpForm').hidden = true; $('#rsvpDone').hidden = false;
     if (yes && window.__petalBurst) window.__petalBurst(innerWidth / 2, innerHeight / 2, 36);
   });
