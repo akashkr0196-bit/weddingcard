@@ -4,13 +4,14 @@ window.__TMN_SAMPLE = {
   order: "groom",
   iso: "2027-12-12T19:00:00+05:30",
   song: "./assets/bgm.mp3",
-  photo: "./assets/photo-1.webp",
+  photo: "./assets/photo-1.webp?v=2",
   phStyle: "collage",
   gallery: [
-    "./assets/photo-2.webp",
-    "./assets/photo-4.webp",
-    "./assets/photo-end.webp",
+    "./assets/photo-2.webp?v=2",
+    "./assets/photo-4.webp?v=2",
+    "./assets/photo-end.webp?v=2",
   ],
+  endPhoto: "./assets/photo-end.webp?v=2",
   events: [
     {
       name: "Pila Chawal",
