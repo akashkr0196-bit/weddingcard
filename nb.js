@@ -25,7 +25,18 @@
   if (m) { var u = new Date(Date.UTC(+m[1], +m[2] - 1, +m[3])); sDay = DAY[u.getUTCDay()]; sDate = (+m[3]) + ' ' + MON[+m[2] - 1] + ' ' + m[1]; }
   if (has(T.dateText)) { sDay = ''; sDate = T.dateText; }   /* typed date text wins */
   put($('#sDay'), sDay); hideIfEmpty($('#sDay'), sDay); put($('#sDateBig'), sDate);
-  var when = new Date(iso), days = isNaN(when) ? -1 : Math.ceil((when - Date.now()) / 864e5);
+  var when = new Date(iso), days = -1;
+  if (m) {
+    var tDate = new Date(+m[1], +m[2] - 1, +m[3]);
+    var now = new Date();
+    var nDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    days = Math.round((tDate - nDate) / 864e5);
+  } else if (!isNaN(when)) {
+    var tDate = new Date(when.getFullYear(), when.getMonth(), when.getDate());
+    var now = new Date();
+    var nDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    days = Math.round((tDate - nDate) / 864e5);
+  }
   if (!has(sDate)) $('#sDate').hidden = true;
 
   var cv = $('#scr'), cx = cv.getContext('2d'), CW = cv.width, CH = cv.height, done = false, down = false, touched = false, lx = 0, ly = 0, lastChk = 0, lastSnd = 0, AC = null;
@@ -81,7 +92,11 @@
     if (done) return; done = true; down = false;
     cv.style.opacity = 0; cv.style.pointerEvents = 'none'; $('#scw').classList.add('hit');
     $('#scrBtn').textContent = T.again || 'Celebrate again';
-    if (days > 0 && has(T.daysLeft)) { var dl = $('#daysLeft'); dl.textContent = T.daysLeft.replace('{n}', days); dl.hidden = false; }
+    if (days >= 0 && has(T.daysLeft)) {
+      var dl = $('#daysLeft');
+      dl.textContent = (days === 0) ? 'Today is the Wedding Day!' : (days === 1 ? '1 day to go' : T.daysLeft.replace('{n}', days));
+      dl.hidden = false;
+    }
     party();
   }
   function P(e) { var r = cv.getBoundingClientRect(); return [(e.clientX - r.left) * CW / r.width, (e.clientY - r.top) * CH / r.height]; }
