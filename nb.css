@@ -210,6 +210,8 @@ body::after{display:none!important}
 #nb .cb-btn svg{width:15px;height:15px;flex:none}
 #nb .cb-call svg{fill:var(--gd)}
 #nb .cb-ig svg{fill:#C13584}
+#nb .powered-by{margin-top:24px;font-family:'Cormorant SC',serif;font-weight:600;font-size:.78rem;letter-spacing:.22em;color:var(--sage);text-transform:uppercase}
+#nb .powered-by b{font-weight:700;color:var(--gd);letter-spacing:.25em}
 
 /* RSVP form window */
 .nb-modal{position:fixed;inset:0;z-index:100003;background:rgba(58,14,26,.55);display:flex;align-items:center;justify-content:center;padding:16px;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
